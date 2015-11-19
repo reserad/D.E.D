@@ -1,0 +1,4 @@
+C:\Users\areser\documents\visual studio 2013\Projects\D.E.D\Helpers\bin\Debug\Helpers.dll
+C:\Users\areser\documents\visual studio 2013\Projects\D.E.D\Helpers\bin\Debug\Helpers.pdb
+C:\Users\areser\documents\visual studio 2013\Projects\D.E.D\Helpers\obj\Debug\Helpers.dll
+C:\Users\areser\documents\visual studio 2013\Projects\D.E.D\Helpers\obj\Debug\Helpers.pdb

@@ -1,0 +1,6 @@
+C:\Users\areser\documents\visual studio 2013\Projects\D.E.D\D.E.D\obj\Debug\D.E.D.Create.resources
+C:\Users\areser\documents\visual studio 2013\Projects\D.E.D\D.E.D\obj\Debug\D.E.D.Main.resources
+C:\Users\areser\documents\visual studio 2013\Projects\D.E.D\D.E.D\obj\Debug\D.E.D.Properties.Resources.resources
+C:\Users\areser\documents\visual studio 2013\Projects\D.E.D\D.E.D\obj\Debug\D.E.D.Verified.resources
+C:\Users\areser\documents\visual studio 2013\Projects\D.E.D\D.E.D\obj\Debug\DED.csproj.GenerateResource.Cache
+C:\Users\areser\documents\visual studio 2013\Projects\D.E.D\D.E.D\obj\Debug\D.E.D.exe
