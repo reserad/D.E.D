@@ -72,62 +72,81 @@ namespace D.E.D
             return encryptedBytes;
         }
 
-        public void EncryptFile(string file, byte[] passwordBytes, string destination, ProgressBar pb)
+        public void EncryptFile(string[] files, byte[] passwordBytes, string[] destinations, ProgressBar pb, int bytesToAllocate)
         {
             DateTime dt = new DateTime();
             var before = DateTime.Now;
-            FileInfo fd = new FileInfo(file);
+            var totalSize = 0.0;
+            int bytesRead = 0;
+            foreach (var file in files) 
+            {
+                FileInfo fd = new FileInfo(file);
+                totalSize += fd.Length;
+            }
+            
             passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
             int percentage = 0;
-            using (Stream source = File.OpenRead(file))
-            using (Stream dest = File.Create(destination))
+            for (int i = 0; i < files.Length; i++) 
             {
-                byte[] buffer = new byte[8192];
-                int bytesRead = 0;
-                int bytes;
-                while ((bytes = source.Read(buffer, 0, buffer.Length)) > 0)
+                using (Stream source = File.OpenRead(files[i]))
+                using (Stream dest = File.Create(destinations[i]))
                 {
-                    dest.Write(encoded(buffer, passwordBytes), 0, bytes);
-                    bytesRead += bytes;
-                    percentage = Convert.ToInt32((double)bytesRead / (double)fd.Length * (double)100);
-
-                    // runs on UI thread
-                    pb.Invoke((MethodInvoker)delegate
+                    byte[] buffer = new byte[bytesToAllocate];
+                    int bytes;
+                    while ((bytes = source.Read(buffer, 0, buffer.Length)) > 0)
                     {
-                        pb.Value = percentage;
-                    });
+                        dest.Write(encoded(buffer, passwordBytes), 0, bytes);
+                        bytesRead += bytes;
+                        percentage = Convert.ToInt32((double)bytesRead / (double)totalSize * (double)100);
+
+                        // runs on UI thread
+                        pb.Invoke((MethodInvoker)delegate
+                        {
+                            pb.Value = percentage;
+                        });
+                    }
                 }
+                LogData(files[i], before, true);
             }
-            LogData(file, before, true);
+
         }
 
-        public void DecryptFile(string file, byte[] passwordBytes, string destination, ProgressBar pb)
+        public void DecryptFile(string[] files, byte[] passwordBytes, string[] destinations, ProgressBar pb, int bytesToAllocate)
         {
             DateTime dt = new DateTime();
             var before = DateTime.Now;
-            FileInfo fd = new FileInfo(file);
+            var totalSize = 0.0;
+            int bytesRead = 0;
+            foreach (var file in files) 
+            {
+                FileInfo fd = new FileInfo(file);
+                totalSize += fd.Length;
+            }
+            
             passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
             int percentage = 0;
-            using (Stream source = File.OpenRead(file))
-            using (Stream dest = File.Create(destination))
+            for (int i = 0; i < files.Length; i++)
             {
-                byte[] buffer = new byte[8192];
-                int bytesRead = 0;
-                int bytes;
-                while ((bytes = source.Read(buffer, 0, buffer.Length)) > 0)
+                using (Stream source = File.OpenRead(files[i]))
+                using (Stream dest = File.Create(destinations[i]))
                 {
-                    dest.Write(decoded(buffer, passwordBytes), 0, bytes);
-                    bytesRead += bytes;
-                    percentage = Convert.ToInt32((double)bytesRead / (double)fd.Length * (double)100);
-
-                    // runs on UI thread
-                    pb.Invoke((MethodInvoker)delegate
+                    byte[] buffer = new byte[bytesToAllocate];
+                    int bytes;
+                    while ((bytes = source.Read(buffer, 0, buffer.Length)) > 0)
                     {
-                        pb.Value = percentage;
-                    });
+                        dest.Write(decoded(buffer, passwordBytes), 0, bytes);
+                        bytesRead += bytes;
+                        percentage = Convert.ToInt32((double)bytesRead / (double)totalSize * (double)100);
+
+                        // runs on UI thread
+                        pb.Invoke((MethodInvoker)delegate
+                        {
+                            pb.Value = percentage;
+                        });
+                    }
                 }
+                LogData(files[i], before, false);
             }
-            LogData(file, before, false);
         }
 
         private void LogData(string file, DateTime before, bool encrypt) 

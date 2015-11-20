@@ -17,12 +17,6 @@ namespace D.E.D
         {
             InitializeComponent();
         }
-
-        public void stuff() 
-        {
-
-        }
-
         private void btnUnlock_Click(object sender, EventArgs e)
         {
             var input = txtUnlock.Text;
@@ -63,7 +57,6 @@ namespace D.E.D
                 cmd.Dispose();
             }
         }
-
         private void Main_Load(object sender, EventArgs e)
         {
             using (var cn = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename" +
@@ -84,7 +77,7 @@ namespace D.E.D
                 cmd.Dispose();
             }
         }
-        public class AutoClosingMessageBox
+        private class AutoClosingMessageBox
         {
             System.Threading.Timer _timeoutTimer;
             string _caption;

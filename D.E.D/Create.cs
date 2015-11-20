@@ -17,11 +17,8 @@ namespace D.E.D
         {
             InitializeComponent();
         }
-
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            var input = txtCreate.Text;
-
             using (var cn = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename" +
              "=|DataDirectory|\\DB.mdf; Integrated Security=True"))
             {
@@ -29,7 +26,7 @@ namespace D.E.D
                 var insertCmd = new SqlCommand(_sql, cn);
                 insertCmd.Parameters
                     .Add(new SqlParameter("@70617373776f7264", SqlDbType.VarChar))
-                    .Value = SHA1.Encode(input);
+                    .Value = SHA1.Encode(txtCreate.Text);
                 cn.Open();
                 insertCmd.ExecuteNonQuery();
                 cn.Close();

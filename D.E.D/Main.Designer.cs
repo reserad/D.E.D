@@ -34,27 +34,32 @@
             // 
             // txtUnlock
             // 
-            this.txtUnlock.Location = new System.Drawing.Point(12, 12);
+            this.txtUnlock.Location = new System.Drawing.Point(12, 14);
             this.txtUnlock.Name = "txtUnlock";
             this.txtUnlock.PasswordChar = '*';
-            this.txtUnlock.Size = new System.Drawing.Size(164, 20);
+            this.txtUnlock.Size = new System.Drawing.Size(179, 20);
             this.txtUnlock.TabIndex = 0;
             // 
             // btnUnlock
             // 
-            this.btnUnlock.Location = new System.Drawing.Point(182, 10);
+            this.btnUnlock.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(135)))), ((int)(((byte)(246)))));
+            this.btnUnlock.FlatAppearance.BorderSize = 0;
+            this.btnUnlock.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUnlock.Font = new System.Drawing.Font("Corbel", 9.75F, System.Drawing.FontStyle.Bold);
+            this.btnUnlock.ForeColor = System.Drawing.Color.White;
+            this.btnUnlock.Location = new System.Drawing.Point(197, 12);
             this.btnUnlock.Name = "btnUnlock";
             this.btnUnlock.Size = new System.Drawing.Size(75, 23);
             this.btnUnlock.TabIndex = 1;
             this.btnUnlock.Text = "Unlock";
-            this.btnUnlock.UseVisualStyleBackColor = true;
+            this.btnUnlock.UseVisualStyleBackColor = false;
             this.btnUnlock.Click += new System.EventHandler(this.btnUnlock_Click);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(263, 43);
+            this.ClientSize = new System.Drawing.Size(284, 46);
             this.Controls.Add(this.btnUnlock);
             this.Controls.Add(this.txtUnlock);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;

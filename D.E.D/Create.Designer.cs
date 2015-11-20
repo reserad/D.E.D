@@ -34,27 +34,32 @@
             // 
             // txtCreate
             // 
-            this.txtCreate.Location = new System.Drawing.Point(12, 12);
+            this.txtCreate.Location = new System.Drawing.Point(12, 14);
             this.txtCreate.Name = "txtCreate";
             this.txtCreate.PasswordChar = '*';
-            this.txtCreate.Size = new System.Drawing.Size(164, 20);
+            this.txtCreate.Size = new System.Drawing.Size(179, 20);
             this.txtCreate.TabIndex = 0;
             // 
             // btnCreate
             // 
-            this.btnCreate.Location = new System.Drawing.Point(182, 10);
+            this.btnCreate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(135)))), ((int)(((byte)(246)))));
+            this.btnCreate.FlatAppearance.BorderSize = 0;
+            this.btnCreate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCreate.Font = new System.Drawing.Font("Corbel", 9.75F, System.Drawing.FontStyle.Bold);
+            this.btnCreate.ForeColor = System.Drawing.Color.White;
+            this.btnCreate.Location = new System.Drawing.Point(197, 12);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(75, 23);
             this.btnCreate.TabIndex = 1;
             this.btnCreate.Text = "Create Key";
-            this.btnCreate.UseVisualStyleBackColor = true;
+            this.btnCreate.UseVisualStyleBackColor = false;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
             // Create
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(263, 43);
+            this.ClientSize = new System.Drawing.Size(284, 46);
             this.Controls.Add(this.btnCreate);
             this.Controls.Add(this.txtCreate);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
