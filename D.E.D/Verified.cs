@@ -42,7 +42,7 @@ namespace D.E.D
                 if (destination == DialogResult.OK)
                 {
                     var bytes = File.ReadAllBytes(openFileDialog1.FileName);
-
+                    byte[] obtainedData = null;
                     using (var cn = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename" +
                  "=|DataDirectory|\\DB.mdf; Integrated Security=True"))
                     {
@@ -57,44 +57,28 @@ namespace D.E.D
                             {
                                 while (reader.Read())
                                 {
-                                    FileInfo fi = new FileInfo(openFileDialog1.FileName);
-                                    DateTime dt = new DateTime();
-                                    var before = DateTime.Now;
-                                    AES aes = new AES();
-                                    Task.Factory.StartNew(() => aes.EncryptFile(openFileDialog1.FileName, Convert.FromBase64String(reader["70617373776f7264"].ToString()), folderBrowserDialog1.SelectedPath + "\\" + openFileDialog1.SafeFileName, pbEncrypt));
-                                    TimeSpan span = DateTime.Now - before;
-                                    using (var cn2 = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename" +
-                                    "=|DataDirectory|\\DB.mdf; Integrated Security=True"))
-                                    {
-                                        string sql = @"INSERT INTO [dbo].[Log] ([DateOfAction], [Name], [SizeOfFile], [TimeElapsed], [Encrypted]) VALUES (@DOA, @Name, @SOF, @TE, @Encrypted)";
-                                        var insertCmd2 = new SqlCommand(sql, cn2);
-                                        insertCmd2.Parameters
-                                            .Add(new SqlParameter("@DOA", SqlDbType.DateTime))
-                                            .Value = before;
-                                        insertCmd2.Parameters
-                                            .Add(new SqlParameter("@Name", SqlDbType.VarChar))
-                                            .Value = openFileDialog1.FileName;
-                                        insertCmd2.Parameters
-                                            .Add(new SqlParameter("@SOF", SqlDbType.VarChar))
-                                            .Value = fi.Length;
-                                        insertCmd2.Parameters
-                                            .Add(new SqlParameter("@TE", SqlDbType.Int))
-                                            .Value = span.TotalSeconds;
-                                        insertCmd2.Parameters
-                                            .Add(new SqlParameter("@Encrypted", SqlDbType.Bit))
-                                            .Value = true;
-                                        cn2.Open();
-                                        insertCmd2.ExecuteNonQuery();
-                                        cn2.Close();
-                                    }
-                                    this.logTableAdapter1.Fill(this.dBDataSet1.Log);
+                                    obtainedData = Convert.FromBase64String(reader["70617373776f7264"].ToString());
                                 }
                             }
                             catch (Exception e2) { MessageBox.Show(e2.Message); }
                         }
                         reader.Dispose();
                         cmd.Dispose();
-                    }               
+                    }
+                    if (obtainedData != null)
+                    {
+                        AES aes = new AES();
+                        Task.Factory.StartNew(() => aes.EncryptFile(openFileDialog1.FileName
+                            , obtainedData
+                            , folderBrowserDialog1.SelectedPath + "\\" + openFileDialog1.SafeFileName
+                            , pbEncrypt)).ContinueWith( t=>
+                        { 
+                            dataGridView1.Invoke((MethodInvoker)delegate
+                            {
+                                logTableAdapter1.Fill(dBDataSet1.Log); 
+                            });
+                        }); 
+                    }
                 }
             }
         }
@@ -110,7 +94,7 @@ namespace D.E.D
                 if (destination == DialogResult.OK)
                 {
                     var bytes = File.ReadAllBytes(openFileDialog1.FileName);
-
+                    byte[] obtainedData = null;
                     using (var cn = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename" +
                  "=|DataDirectory|\\DB.mdf; Integrated Security=True"))
                     {
@@ -125,43 +109,27 @@ namespace D.E.D
                             {
                                 while (reader.Read())
                                 {
-                                    FileInfo fi = new FileInfo(openFileDialog1.FileName);
-                                    DateTime dt = new DateTime();
-                                    var before = DateTime.Now;
-                                    AES aes = new AES();
-                                    Task.Factory.StartNew(() => aes.DecryptFile(openFileDialog1.FileName, Convert.FromBase64String(reader["70617373776f7264"].ToString()), folderBrowserDialog1.SelectedPath + "\\" + openFileDialog1.SafeFileName, pbDecrypt));
-                                    TimeSpan span = DateTime.Now - before;
-                                    using (var cn2 = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename" +
-                                    "=|DataDirectory|\\DB.mdf; Integrated Security=True"))
-                                    {
-                                        string sql = @"INSERT INTO [dbo].[Log] ([DateOfAction], [Name], [SizeOfFile], [TimeElapsed], [Encrypted]) VALUES (@DOA, @Name, @SOF, @TE, @Encrypted)";
-                                        var insertCmd2 = new SqlCommand(sql, cn2);
-                                        insertCmd2.Parameters
-                                            .Add(new SqlParameter("@DOA", SqlDbType.DateTime))
-                                            .Value = before;
-                                        insertCmd2.Parameters
-                                            .Add(new SqlParameter("@Name", SqlDbType.VarChar))
-                                            .Value = openFileDialog1.FileName;
-                                        insertCmd2.Parameters
-                                            .Add(new SqlParameter("@SOF", SqlDbType.VarChar))
-                                            .Value = fi.Length;
-                                        insertCmd2.Parameters
-                                            .Add(new SqlParameter("@TE", SqlDbType.Int))
-                                            .Value = span.TotalSeconds;
-                                        insertCmd2.Parameters
-                                            .Add(new SqlParameter("@Encrypted", SqlDbType.Bit))
-                                            .Value = false;
-                                        cn2.Open();
-                                        insertCmd2.ExecuteNonQuery();
-                                        cn2.Close();
-                                    }
-                                    this.logTableAdapter1.Fill(this.dBDataSet1.Log);
+                                    obtainedData = Convert.FromBase64String(reader["70617373776f7264"].ToString());
                                 }
                             }
                             catch (Exception e2) { MessageBox.Show(e2.Message); }
                         }
                         reader.Dispose();
                         cmd.Dispose();
+                    }
+                    if (obtainedData != null)
+                    {
+                        AES aes = new AES();
+                        Task.Factory.StartNew(() => aes.DecryptFile(openFileDialog1.FileName
+                            , obtainedData
+                            , folderBrowserDialog1.SelectedPath + "\\" + openFileDialog1.SafeFileName
+                            , pbEncrypt)).ContinueWith( t=>
+                        { 
+                            dataGridView1.Invoke((MethodInvoker)delegate
+                            {
+                                logTableAdapter1.Fill(dBDataSet1.Log); 
+                            });
+                        }); 
                     }
                 }
             }

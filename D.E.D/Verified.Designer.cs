@@ -38,8 +38,8 @@
             this.timeElapsedDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sizeOfFileDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.logBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.dBDataSet1 = new DBDataSet1();
-            this.logTableAdapter1 = new DBDataSet1TableAdapters.LogTableAdapter();
+            this.dBDataSet1 = new D.E.D.DBDataSet1();
+            this.logTableAdapter1 = new D.E.D.DBDataSet1TableAdapters.LogTableAdapter();
             this.pbEncrypt = new System.Windows.Forms.ProgressBar();
             this.pbDecrypt = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -168,7 +168,11 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnDecrypt);
             this.Controls.Add(this.btnEncrypt);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Verified";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Verified";
             this.Load += new System.EventHandler(this.Verified_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
